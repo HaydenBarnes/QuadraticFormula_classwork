@@ -1,0 +1,260 @@
+﻿// Class: ERAU ISTA220 PROGRAMMING FUNDAMENTALS
+// STUDENT: HAYDEN BARNES 
+// INSTRUCTOR: CHRISTINE E LEE, INSTRUCTOR
+// DATE: 07/20/2020
+
+/******************************************************************
+ * This project contains code to operate different mathmatical operations.
+ * 
+ * Revisions: Exception handeling in all methods (try, catch, finally, 
+ * and checked/unchecked variables.
+ * 
+ * Revisions Date: 07/20/2020
+ * 
+ * Revised By: Hayden Barnes
+ * 
+ *****************************************************************/
+
+using System;
+
+namespace Test
+{
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            bool displayMenu = true;
+            while (displayMenu == true)
+            {
+                displayMenu = MainMenu();
+            }
+
+        }
+        static bool MainMenu()
+        {
+
+
+            Console.Clear();
+            Console.WriteLine("Choose an option:");
+            Console.WriteLine("1) Circumference and area of a circle");
+            Console.WriteLine("2) Volume of a hemisphere");
+            Console.WriteLine("3) Area of a triangle");
+            Console.WriteLine("4) Quadratic equations");
+            Console.WriteLine("5) Exit");
+            string result = Console.ReadLine();
+            try
+            {
+                /**/
+                if (result == "1")
+                {
+                    CircumferenceAndAreaOfACircle();
+                    return true;
+                }
+                else if (result == "2")
+                {
+                    VolumeOfHemisphere();
+                    return true;
+                }
+
+                else if (result == "3")
+                {
+                    AreaOfTriangle();
+                    return true;
+                }
+                else if (result == "4")
+                {
+                    QuadraticFormulas();
+                    return true;
+                }
+                else if (result == "5")
+                {
+                    Exit();
+                    return false;
+                }
+                else
+                {
+                    Console.WriteLine("Please choose a valid option.");
+                    Console.ReadLine();
+                    return true;
+                }
+            }
+            catch (FormatException fEx)
+            {
+                Console.WriteLine(fEx.Message);
+                Console.WriteLine("Press any key to return to Main Menu...");
+                Console.ReadLine();
+                return true;
+            }
+            catch (DivideByZeroException dEx)
+            {
+                Console.WriteLine(dEx.Message);
+                Console.WriteLine("Press any key to return to Main Menu...");
+                Console.ReadLine();
+                return true;
+            }
+            catch (OverflowException oEx)
+            {
+                Console.WriteLine(oEx.Message);
+                Console.WriteLine("Press any key to return to Main Menu...");
+                Console.ReadLine();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("Press any key to return to Main Menu...");
+                Console.ReadLine();
+                return true;
+            }
+            finally
+            {
+                //nothing here
+            }
+
+        }
+
+        //Part 1 Circumfrence and Area of a circle
+        static void CircumferenceAndAreaOfACircle()
+        {
+            Console.Clear();
+            Console.WriteLine("\nPart 1, circumference and area of a circle.");
+            Console.Write("Enter an integer for the radius: ");
+            string strradius = Console.ReadLine();
+            double intradius = double.Parse(strradius);
+            double circumference = 2 * Math.PI * intradius;
+            Console.WriteLine($"The circumference is {circumference,0:0.00}", circumference);
+
+            //Area Code
+            double area = checked(Math.PI * (intradius * intradius));
+            Console.WriteLine("The area is {0:F2}", area);
+            Console.ReadLine();
+
+        }
+
+
+        /*
+         * References
+         * https://www.w3resource.com/csharp-exercises/data-types/csharp-data-type-exercise-5.php
+         * https://forum.tutorials7.com/1162/how-to-calculate-the-area-of-a-circle-in-c%23
+         * https://www.w3schools.com/cs/cs_exceptions.asp
+         */
+
+        //Part 2 Volume of a hemisphere
+
+        static void VolumeOfHemisphere()
+        {
+            Console.Clear();
+            Console.WriteLine("Volume calculator for a hemisphere");
+            Console.Write("Please enter the radius of your sphere: ");
+            var r = double.Parse(Console.ReadLine());
+            var volume = checked( 4 / 3.0 * Math.PI * Math.Pow(r, 3));
+            Console.Write($"The volume of your sphere is: {volume: 0.##}");
+            Console.ReadLine();
+        }
+
+        //Part 3 Herrons Formula
+
+        static void AreaOfTriangle()
+        {
+
+            Console.Clear();
+            double s, area;
+            double side1, side2, side3;
+
+            Console.WriteLine("Welcome to Herron Formula calculator!");
+            Console.Write("Please enter side 1: ");
+            side1 = double.Parse(Console.ReadLine());
+            Console.Write("Enter side 2: ");
+            side2 = double.Parse(Console.ReadLine());
+            Console.Write("Now enter side 3: ");
+            side3 = double.Parse(Console.ReadLine());
+
+            s = (side1 + side2 + side3) / 2;
+            area = checked (Math.Sqrt(s * (s - side1) * (s - side2) * (s = side3)));
+
+            Console.WriteLine($"Area of your triangle is: {area}");
+            Console.ReadLine();
+
+        }
+
+        /*
+         * References
+         * https://stackoverflow.com/questions/47255485/c-sharp-heron-triangles
+         */
+
+        //Part 4 Quadratic Formulas
+
+        static void QuadraticFormulas()
+        {
+            int a, b, c;
+            double d, x1, x2;
+
+            Console.Clear();
+            Console.WriteLine("Quadratic Formulas");
+            Console.Write("Input the value of a : ");
+            a = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Input the value of b : ");
+            b = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Input the value of c : ");
+            c = Convert.ToInt32(Console.ReadLine());
+
+            d = b * b - 4 * a * c;
+            if (d == 0)
+            {
+                Console.Write("Both roots are equal.\n");
+                x1 = -b / (2.0 * a);
+                x2 = x1;
+                Console.Write("First  Root Root1= {0}", x1);
+                Console.Write("Second Root Root2= {0}", x2);
+            }
+            else if (d > 0)
+            {
+                Console.Write("Both roots are real and diff-2\n");
+
+                x1 = (-b + Math.Sqrt(d)) / (2 * a);
+                x2 = (-b - Math.Sqrt(d)) / (2 * a);
+
+                Console.Write("First  Root Root1= {0}\n", x1);
+                Console.Write("Second Root root2= {0}\n", x2);
+            }
+            else
+                Console.Write("Root are imeainary;\nNo Solution. \n\n");
+            Console.ReadLine();
+
+        }
+
+        static void Exit()
+        {
+            Console.Clear();
+            Console.WriteLine("Are you sure?");
+            Console.WriteLine("Y or N?");
+            string result = Console.ReadLine();
+
+            if (result == "Y")
+            {
+                Console.Clear();
+                Console.WriteLine("Thank you! Goodbye!");
+            }
+            else if (result == "y")
+            {
+                Console.Clear();
+                Console.WriteLine("Thank you! Goodbye!");
+            }
+            else if (result == "N")
+            {
+                MainMenu();
+            }
+            else if (result == "n")
+            {
+                MainMenu();
+            }
+
+        }
+    }
+
+}
+
+
+
